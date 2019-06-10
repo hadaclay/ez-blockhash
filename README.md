@@ -1,6 +1,6 @@
 # EZ Block-Hash
 
-[https://ez-blockhash.herokuapp.com/]()
+[https://ez-blockhash.herokuapp.com/](https://ez-blockhash.herokuapp.com/)
 
 A simple web utility for generating a perceptual hash from a png/jpg (gifs not supported.)
 
