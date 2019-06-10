@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>EZ Block-Hash</title>
+  </head>
+  <body>
+    <div class="container" style="padding-top: 33vh;">
+      <h1>EZ Block-hash</h1>
+      <div class="col-md-8 col-md-offset-2">
+        <form method="POST" action="/upload" enctype="multipart/form-data">
+          <!-- COMPONENT START -->
+          <div class="form-group row">
+            <div class="input-group input-file" name="image-upload">
+              <input
+                id="input-file"
+                type="text"
+                class="form-control"
+                placeholder="Select a file..."
+              />
+            </div>
+          </div>
+          <!-- COMPONENT END -->
+          <div class="form-inline">
+            <label class="sr-only" for="inlineFormInputGroupUsername2">Username</label>
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Bits</div>
+              </div>
+              <input type="text" class="form-control" id="bitAmount" placeholder="16" value=16 name="bitAmount">
+            </div>
+
+            <div class="form-check mb-2 mr-sm-2">
+              <input class="form-check-input" type="checkbox" id="precise" name="precise">
+              <label class="form-check-label" for="precise">
+                Precise?
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function bs_input_file() {
+        $(".input-file").before(function() {
+          if (
+            !$(this)
+              .prev()
+              .hasClass("input-ghost")
+          ) {
+            var element = $(
+              "<input type='file' class='input-ghost' style='visibility:hidden; height:0'>"
+            );
+            element.attr("name", $(this).attr("name"));
+            element.change(function() {
+              element
+                .next(element)
+                .find("input")
+                .val(
+                  element
+                    .val()
+                    .split("\\")
+                    .pop()
+                );
+            });
+            $(this)
+              .find("button.btn-choose")
+              .click(function() {
+                element.click();
+              });
+            $(this)
+              .find("button.btn-reset")
+              .click(function() {
+                element.val(null);
+                $(this)
+                  .parents(".input-file")
+                  .find("input")
+                  .val("");
+              });
+            $(this)
+              .find("input")
+              .css("cursor", "pointer");
+            $(this)
+              .find("input")
+              .mousedown(function() {
+                $(this)
+                  .parents(".input-file")
+                  .prev()
+                  .click();
+                return false;
+              });
+            return element;
+          }
+        });
+      }
+      $(function() {
+        bs_input_file();
+        document.getElementById("input-file").reset();
+      });
+    </script>
+  </body>
+</html>
