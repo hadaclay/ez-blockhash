@@ -7,13 +7,18 @@ const { imageHash } = require('image-hash');
 const app = express();
 
 const storage = multer.diskStorage({
-  dest: 'uploads/',
   filename: (req, file, cb) => {
     cb(null, path.basename(file.originalname) + '-' + Date.now() + path.extname(file.originalname));
   } 
 });
 
-const upload = multer({storage});
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 9000000,
+    files: 1
+  }
+});
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -43,4 +48,4 @@ app.post('/upload', upload.single('image-upload'), (req, res, next) => {
   });
 });
 
-app.listen(process.env.PORT, () => console.log(`Server listening on port ${process.env.PORT}`));
+app.listen(!!process.env.PORT || 3000, () => console.log(`Server listening on port ${process.env.PORT}`));
